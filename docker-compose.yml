@@ -58,7 +58,7 @@ frontendproxy:
 
 nginx:
   restart: always
-  image: tutum.co/aluxian/foufrontend
+  image: tutum.co/aluxian/founginx
   links:
     - apiproxy
     - frontendproxy
