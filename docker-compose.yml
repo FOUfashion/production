@@ -41,7 +41,7 @@ frontend:
     - NPM_CONFIG_LOGLEVEL=http
     - FRONTEND_PORT=9090
     - FRONTEND_HOSTNAME=0.0.0.0
-    - FRONTEND_API_URI=http://apiproxy:5000
+    - FRONTEND_API_URI=http://apiproxy
     - FRONTEND_REDIS_HOST=redis
     - FRONTEND_REDIS_PORT=6379
   links:
