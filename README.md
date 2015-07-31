@@ -31,6 +31,22 @@ This is a Docker Compose app with all the services imported as submodules. It's 
 ## Deployment
 
 ```bash
+# Log in to tutum.co (used as our private registry)
+$ export TUTUM_USER="<user>"
+$ docker login tutum.co
+
+# Build the container images
+$ docker build api
+$ docker build frontend
+
+# Tag the images
+$ docker tag api tutum.co/$TUTUM_USER/fouapi
+$ docker tag frontend tutum.co/$TUTUM_USER/foufrontend
+
+# Push the images
+$ docker push tutum.co/$TUTUM_USER/fouapi
+$ docker push tutum.co/$TUTUM_USER/foufrontend
+
 # Generate a discovery token
 $ docker run swarm create
 
@@ -56,10 +72,7 @@ $ docker-machine create \
 # Configure the docker cli to use the swarm
 $ eval $(docker-machine env --swarm fou-prod-master)
 
-# Build the container images
-$ docker-compose build
-
-# Start the app containers
+# Start the app
 $ docker-compose up -d
 ```
 

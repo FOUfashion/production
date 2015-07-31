@@ -7,7 +7,7 @@ redis:
 
 api:
   restart: always
-  build: ./api
+  image: tutum.co/aluxian/fouapi
   env_file: ./api.env
   environment:
     - NODE_ENV=production
@@ -34,7 +34,7 @@ apiproxy:
 
 frontend:
   restart: always
-  build: ./frontend
+  image: tutum.co/aluxian/foufrontend
   env_file: ./frontend.env
   environment:
     - NODE_ENV=production
@@ -69,5 +69,5 @@ nginx:
     - frontendproxy
     - rethinkdb
   ports:
-    - 81:80
+    - 80:80
     - 443:443
