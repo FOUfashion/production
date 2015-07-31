@@ -58,12 +58,7 @@ frontendproxy:
 
 nginx:
   restart: always
-  image: lewg/nginx-pagespeed
-  volumes:
-    - ./config/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
-    - ./config/nginx/sites-enabled:/etc/nginx/sites-enabled:ro
-    - ./config/nginx/credentials:/etc/nginx/credentials:ro
-    - ./config/nginx/ssl:/etc/nginx/ssl:ro
+  image: tutum.co/aluxian/foufrontend
   links:
     - apiproxy
     - frontendproxy

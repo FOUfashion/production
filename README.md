@@ -37,10 +37,12 @@ $ docker login tutum.co
 # Build the container images
 $ docker build -t 'tutum.co/<user>/fouapi' api
 $ docker build -t 'tutum.co/<user>/foufrontend' frontend
+$ docker build -t 'tutum.co/<user>/founginx' nginx
 
 # Push the images
 $ docker push 'tutum.co/<user>/fouapi'
 $ docker push 'tutum.co/<user>/foufrontend'
+$ docker push 'tutum.co/<user>/founginx'
 
 # Generate a discovery token
 $ docker run --rm swarm create
