@@ -43,7 +43,7 @@ $ docker push 'tutum.co/<user>/fouapi'
 $ docker push 'tutum.co/<user>/foufrontend'
 
 # Generate a discovery token
-$ docker run swarm create
+$ docker run --rm swarm create
 
 # Deploy the master server on Digital Ocean
 $ docker-machine create \
