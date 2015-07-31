@@ -1,0 +1,73 @@
+rethinkdb:
+  restart: always
+  image: rethinkdb
+
+redis:
+  image: redis
+
+api:
+  restart: always
+  build: ./api
+  env_file: ./api.env
+  environment:
+    - NODE_ENV=production
+    - NPM_CONFIG_LOGLEVEL=http
+    - API_PORT=5000
+    - API_HOSTNAME=0.0.0.0
+    - RETHINKDB_HOST=rethinkdb
+    - RETHINKDB_PORT=28015
+    - RETHINKDB_DB=production
+    - API_CLI_ENABLED=true
+    - API_CLI_PORT=4000
+  links:
+    - rethinkdb
+  ports:
+    - 4000
+
+apiproxy:
+  restart: always
+  image: tutum/haproxy
+  environment:
+    - BACKEND_PORT=5000
+  links:
+    - api
+
+frontend:
+  restart: always
+  build: ./frontend
+  env_file: ./frontend.env
+  environment:
+    - NODE_ENV=production
+    - NPM_CONFIG_LOGLEVEL=http
+    - FRONTEND_PORT=9090
+    - FRONTEND_HOSTNAME=0.0.0.0
+    - FRONTEND_API_URI=http://apiproxy:5000
+    - FRONTEND_REDIS_HOST=redis
+    - FRONTEND_REDIS_PORT=6379
+  links:
+    - apiproxy
+    - redis
+
+frontendproxy:
+  restart: always
+  image: tutum/haproxy
+  environment:
+    - BACKEND_PORT=9090
+  links:
+    - frontend
+
+nginx:
+  restart: always
+  image: lewg/nginx-pagespeed
+  volumes:
+    - ./config/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    - ./config/nginx/sites-enabled:/etc/nginx/sites-enabled:ro
+    - ./config/nginx/credentials:/etc/nginx/credentials:ro
+    - ./config/nginx/ssl:/etc/nginx/ssl:ro
+  links:
+    - apiproxy
+    - frontendproxy
+    - rethinkdb
+  ports:
+    - 80:80
+    - 443:443
