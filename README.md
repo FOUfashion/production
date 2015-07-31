@@ -4,13 +4,13 @@ This is a Docker Compose app with all the services imported as submodules. It's 
 
 ## Features
 
-- [HAProxy](http://www.haproxy.org/)
-  - `frontend` and `api` are each behind a HAProxy reverse-proxy container
-  - newly created containers are recognised (includes cluster discovery)
+- services
+  - `frontend` and `api` are each behind a [HAProxy](http://www.haproxy.org/) reverse-proxy container
+  - the HAProxy container includes cluster discovery so newly created containers are immediately picked up
   - scaling the services is very easy: `docker-compose scale api=3 frontend=2`
-- [nginx](http://nginx.org/)
-  - the main reverse proxy
-  - enforces HTTPS connections using HSTS
+- main
+  - the main reverse proxy is [nginx](http://nginx.org/)
+  - HTTPS connections are enforced; HSTS is also turned on
   - secure SSL certificate: 2048-bit key encrypted with SHA256
   - extra measures for security
     - `X-Frame-Options SAMEORIGIN` – block frames
@@ -18,7 +18,7 @@ This is a Docker Compose app with all the services imported as submodules. It's 
     - `X-XSS-Protection "1; mode=block"` – force enable the browser XSS filter
   - Gzip and SPDY enabled for extra speed
   - Google's [PageSpeed](https://developers.google.com/speed/pagespeed/module/?hl=en) module baked in for even more speed and performance
-- [Docker](https://www.docker.com/)
+- orchestration
   - services run inside containers using [Docker Engine](https://www.docker.com/docker-engine)
   - containers are managed with [Docker Compose](https://www.docker.com/docker-compose)
   - the cluster of servers is managed by [Docker Swarm](https://www.docker.com/docker-swarm)
@@ -28,12 +28,46 @@ This is a Docker Compose app with all the services imported as submodules. It's 
 
 - set up nginx to cache static pages
 
+## Deployment
+
+```bash
+# Generate a discovery token
+$ docker run swarm create
+
+# Deploy the master server on Digital Ocean
+$ docker-machine create \
+  --driver digitalocean \
+  --digitalocean-access-token=$DO_TOKEN \
+  --digitalocean-region=ams2 \
+  --swarm \
+  --swarm-master \
+  --swarm-discovery token://$SWARM_TOKEN \
+  fou-prod-master
+
+# Deploy nodes
+$ docker-machine create \
+  --driver digitalocean \
+  --digitalocean-access-token=$DO_TOKEN \
+  --digitalocean-region=ams2 \
+  --swarm \
+  --swarm-discovery token://$SWARM_TOKEN \
+  fou-prod-agent-XX
+
+# Configure the docker cli to use the swarm
+$ eval $(docker-machine env --swarm fou-prod-master)
+
+# Build the container images
+$ docker-compose build
+
+# Start the app containers
+$ docker-compose up -d
+```
+
 ## Domains
 
 - `fou.fashion` – the frontend service
 - `api.fou.fashion` – the root API endpoint
-- `rethinkdb.fou.fashion` – RethinkDB dashboard
-# Development Set-up
+- `rethinkdb.fou.fashion` – RethinkDB dashboard (password protected)
 
 ## Extra
 
