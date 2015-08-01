@@ -23,6 +23,7 @@ This is a Docker Compose app with all the services imported as submodules. It's 
   - containers are managed with [Docker Compose](https://www.docker.com/docker-compose)
   - the cluster of servers is managed by [Docker Swarm](https://www.docker.com/docker-swarm)
   - the servers are on [Digital Ocean](https://www.digitalocean.com/) deployed with [Docker Machine](https://www.docker.com/docker-machine)
+- average [load time](http://tools.pingdom.com/fpt/#!/bRQSQU/https://fou.fashion/) under 1 second
 
 ## To-Do
 
