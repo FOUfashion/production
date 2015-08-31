@@ -74,6 +74,10 @@ $ eval $(docker-machine env --swarm fou-prod-master)
 $ docker-compose up -d
 ```
 
+## Backend Diagram
+
+![](backend.png)
+
 ## Domains
 
 - `fou.fashion` – the frontend service
