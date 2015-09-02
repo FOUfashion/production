@@ -1,6 +1,0 @@
-[submodule "api"]
-	path = api
-	url = git@github.com:FOUfashion/api.git
-[submodule "frontend"]
-	path = frontend
-	url = git@github.com:FOUfashion/frontend.git
