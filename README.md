@@ -23,7 +23,9 @@ This is a Docker Compose app with all the services imported as submodules. It's 
   - containers are managed with [Docker Compose](https://www.docker.com/docker-compose)
   - the cluster of servers is managed by [Docker Swarm](https://www.docker.com/docker-swarm)
   - the servers are on [Digital Ocean](https://www.digitalocean.com/) deployed with [Docker Machine](https://www.docker.com/docker-machine)
-- average load time under 1 second: [frontend](http://tools.pingdom.com/fpt/#!/bRQSQU/https://fou.fashion/), [api](http://tools.pingdom.com/fpt/#!/c3WC5o/https://api.fou.fashion/)
+- stats
+  - average load time under 1 second: [frontend](http://tools.pingdom.com/fpt/#!/bRQSQU/https://fou.fashion/), [api](http://tools.pingdom.com/fpt/#!/c3WC5o/https://api.fou.fashion/)
+  - A+ on Qualys's SSL [report](https://www.ssllabs.com/ssltest/analyze.html?d=fou.fashion)
 
 ## To-Do
 
